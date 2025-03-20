@@ -9,7 +9,7 @@ export default function Feedscreen() {
         alignItems: "center",
       }}
     >
-      <Text>Feed screen</Text>
+      <Text className="text-2xl">Feed screen</Text>
     </View>
   );
 }
