@@ -1,10 +1,12 @@
 import { Text, View, Image, TextInput,Pressable } from "react-native";
 import { useEffect, useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
+import Button from "../components/Button";
 
 export default function CreatePost() {
-    const [image, setImage] = useState<string | null>(null);
+    
     const [caption, setCaption] = useState('');
+    const [image, setImage] = useState<string | null>(null);
     useEffect(()=>{
         if (!image) {
             pickImage();
@@ -51,11 +53,12 @@ export default function CreatePost() {
 
 
     {/*submit button*/}
-    <View className="mt-auto w-full">
+    <Button title="Post"/>
+    {/* <View className="mt-auto w-full">
     <Pressable onPress={() => {}} className="bg-blue-400 w-full items-center py-3 rounded-lg">
         <Text className="text-white font-semibold">Post</Text>
     </Pressable>
-    </View>
+    </View> */}
 
     </View>
   );
