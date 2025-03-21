@@ -2,6 +2,9 @@ import { Text, View, Image, TextInput,Pressable } from "react-native";
 import { useEffect, useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import Button from "../components/Button";
+import {upload} from 'cloudinary-react-native';
+import { cld } from "../lib/cloudinary";
+import { UploadApiResponse } from "cloudinary-react-native/lib/typescript/src/api/upload/model/params/upload-params";
 
 export default function CreatePost() {
     
@@ -20,7 +23,7 @@ export default function CreatePost() {
       mediaTypes: ['images'],
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.5,
     });
 
     
@@ -29,6 +32,41 @@ export default function CreatePost() {
       setImage(result.assets[0].uri);
     }
   };
+
+  const uploadImage = async() => {
+    if (!image) {
+        return;
+      }
+      const options = {
+        upload_preset: 'default',
+        unsigned: true,
+    }
+    return new Promise<UploadApiResponse>(async(resolve, reject) => { 
+
+      await upload(cld, {
+        file: image , 
+          options: options, 
+          callback: (error, response) => {
+            if (error || !response) {
+              reject(error);
+            }
+            resolve(response);
+
+        }
+        
+    })
+   
+    });
+     
+      
+  }
+  const sharePost = async() => {
+    //upload to cloudinary
+    const response = await uploadImage();
+    console.log(response?.public_id)
+
+    //save image to DB
+  }
 
   return (
 
@@ -53,7 +91,7 @@ export default function CreatePost() {
 
 
     {/*submit button*/}
-    <Button title="Post"/>
+    <Button title="Post" onPress={sharePost}/>
     {/* <View className="mt-auto w-full">
     <Pressable onPress={() => {}} className="bg-blue-400 w-full items-center py-3 rounded-lg">
         <Text className="text-white font-semibold">Post</Text>
