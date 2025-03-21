@@ -2,6 +2,7 @@ import { Text, View, Image, TextInput } from "react-native";
 import { useEffect, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import Button from "../components/Button";
+import { supabase } from "../lib/supabase";
 export default function Index() {
   
       const [image, setImage] = useState<string | null>(null);
@@ -65,7 +66,7 @@ export default function Index() {
       {/*button*/}
       <View>
       <Button title="Update Profile"/>
-      <Button title="Sign out"/>
+      <Button title="Sign out" onPress={()=>supabase.auth.signOut()}/>
       </View>
     </View>
   );

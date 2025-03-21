@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import Button from "../components/Button";
 import {upload} from 'cloudinary-react-native';
-import { cld } from "../lib/cloudinary";
+import { cld, uploadImage } from "../lib/cloudinary";
 import { UploadApiResponse } from "cloudinary-react-native/lib/typescript/src/api/upload/model/params/upload-params";
 
 export default function CreatePost() {
@@ -33,36 +33,11 @@ export default function CreatePost() {
     }
   };
 
-  const uploadImage = async() => {
-    if (!image) {
-        return;
-      }
-      const options = {
-        upload_preset: 'default',
-        unsigned: true,
-    }
-    return new Promise<UploadApiResponse>(async(resolve, reject) => { 
-
-      await upload(cld, {
-        file: image , 
-          options: options, 
-          callback: (error, response) => {
-            if (error || !response) {
-              reject(error);
-            }
-            resolve(response);
-
-        }
-        
-    })
-   
-    });
-     
-      
-  }
+  
   const sharePost = async() => {
+    if (!image) {return}
     //upload to cloudinary
-    const response = await uploadImage();
+    const response = await uploadImage(image);
     console.log(response?.public_id)
 
     //save image to DB
