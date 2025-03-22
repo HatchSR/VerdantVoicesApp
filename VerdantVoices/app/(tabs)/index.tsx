@@ -19,7 +19,7 @@ export default function Feedscreen() {
             console.log(error);
         } 
         setPost(data);
-        console.log(data);
+        //console.log(data);
         
     };
 

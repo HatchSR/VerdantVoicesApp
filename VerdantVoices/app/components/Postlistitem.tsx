@@ -16,7 +16,7 @@ export default function PostlistItem({post}) {
     //const {width} = 411
     image
     .resize(thumbnail().width(411).height(411)) 
-    const avatar = cld.image(post.user.avatar_url);
+    const avatar = cld.image(post.user.avatar_url ||'NewUser_nfj5mp');
     //const {width} = 411
     avatar
     .resize(thumbnail().width(48).height(48)) 
@@ -27,7 +27,7 @@ export default function PostlistItem({post}) {
         {/*Header*/}
         <View className="p-3 flex-row items-center gap-2">
             <AdvancedImage cldImg={avatar} className="w-12 aspect-square rounded-full" />
-            <Text className="font-semibold">{post.user.username}</Text>
+            <Text className="font-semibold">{post.user.username || 'New user'}</Text>
         </View>
 
         {/*content */}

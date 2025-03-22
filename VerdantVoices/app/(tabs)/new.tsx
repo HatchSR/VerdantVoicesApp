@@ -39,15 +39,15 @@ export default function CreatePost() {
 
   
   const sharePost = async() => {
-    console.log('button pressed');
+
     
     if (!image) {
         console.log('no image ')
         return}
     //upload to cloudinary
-    console.log(image)
+    //console.log(image)
     const response = await uploadImage(image);
-    console.log(response?.public_id)
+    //console.log(response?.public_id)
 
     //save image to DB
 
