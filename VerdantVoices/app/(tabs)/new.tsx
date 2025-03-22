@@ -3,10 +3,14 @@ import { useEffect, useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import Button from "../components/Button";
 import {upload} from 'cloudinary-react-native';
-import { cld, uploadImage } from "../lib/cloudinary";
+import { cld, uploadImage } from "../../lib/cloudinary";
 import { UploadApiResponse } from "cloudinary-react-native/lib/typescript/src/api/upload/model/params/upload-params";
+import { supabase } from "../../lib/supabase";
+import { useAuth } from "../providers/AuthProviders";
+import { router } from "expo-router";
 
 export default function CreatePost() {
+    const {session} = useAuth();
     
     const [caption, setCaption] = useState('');
     const [image, setImage] = useState<string | null>(null);
@@ -35,12 +39,27 @@ export default function CreatePost() {
 
   
   const sharePost = async() => {
-    if (!image) {return}
+    console.log('button pressed');
+    
+    if (!image) {
+        console.log('no image ')
+        return}
     //upload to cloudinary
+    console.log(image)
     const response = await uploadImage(image);
     console.log(response?.public_id)
 
     //save image to DB
+
+    const { data, error } = await supabase
+    .from('posts')
+    .insert([
+    { caption, 
+        image: response?.public_id, 
+        user_id: session?.user.id },
+    ])
+    .select()
+    router.push('/(tabs)');
   }
 
   return (

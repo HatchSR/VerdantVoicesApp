@@ -2,7 +2,7 @@ import { Text, View, Image, TextInput } from "react-native";
 import { useEffect, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import Button from "../components/Button";
-import { supabase } from "../lib/supabase";
+import { supabase } from "../../lib/supabase";
 export default function Index() {
   
       const [image, setImage] = useState<string | null>(null);

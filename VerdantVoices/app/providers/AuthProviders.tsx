@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { ActivityIndicator } from 'react-native';
 
-import { supabase } from '~/app/lib/supabase';
+import { supabase } from '~/lib/supabase';
 
 type Auth = {
   isAuthenticated: boolean;

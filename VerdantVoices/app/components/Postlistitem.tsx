@@ -7,7 +7,7 @@ import { thumbnail } from "@cloudinary/url-gen/actions/resize";
 import { byRadius } from "@cloudinary/url-gen/actions/roundCorners";
 import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
 import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
-import { cld } from "../lib/cloudinary";
+import { cld } from "../../lib/cloudinary";
 
 
 
