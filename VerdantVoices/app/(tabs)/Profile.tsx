@@ -5,17 +5,23 @@ import Button from "../components/Button";
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../providers/AuthProviders";
 import CustomTextInput from "../components/CustomTextInput";
+import { cld, uploadImage } from "~/lib/cloudinary";
+import { thumbnail } from "@cloudinary/url-gen/actions/resize";
+import { AdvancedImage } from "cloudinary-react-native";
+
 export default function ProfileScreen() {
   //if you want to add more information to profile, copy each instance of username and change the variable to the desired name, be sure to update profiles table in supabase to refelct the changes
       const [image, setImage] = useState<string | null>(null);
+      const [remoteImage, setRemoteImage] = useState<string | null>(null);
       const [username, setUsername] = useState('');
+
       ///const [email, setEmail] = useState('');
       const {user} = useAuth();
-      useEffect(()=>{
-          if (!image) {
-              pickImage();
-          }
-      }, [image]);
+      // useEffect(()=>{
+      //     if (!image) {
+      //         pickImage();
+      //     }
+      // }, [image]);
   
       useEffect(() => {
         getProfile();
@@ -39,7 +45,7 @@ export default function ProfileScreen() {
         
         setUsername(data.username);
         //setEmail(data.email);
-        setImage(data.avatar_url);
+        setRemoteImage(data.avatar_url);
         
       }
 
@@ -47,15 +53,25 @@ export default function ProfileScreen() {
         if (!user) {
           return;
         }
+
+        const updatedProfile = {
+          username,
+        }
+        if (image){
+          const response = await uploadImage(image);
+          console.log(response?.public_id);
+          updatedProfile.avatar_url = response.public_id
+        }
         const { data, error } =
         await supabase
           .from('profiles')
-          .update({
-            username,
-          })
+          .update(
+            updatedProfile
+          )
           .eq('id', user.id)
           if (error) {
             Alert.alert('failed to update profile');
+            console.log(error);
           } else{
             Alert.alert('profile updated');
           }
@@ -76,6 +92,16 @@ export default function ProfileScreen() {
         setImage(result.assets[0].uri);
       }
     };
+    
+    let remoteCloudinaryimage;
+    if (remoteImage) {
+      remoteCloudinaryimage = cld.image(remoteImage);
+      //const {width} = 411
+      remoteCloudinaryimage
+      .resize(thumbnail().width(300).height(300)) 
+      
+    }
+
   
   return (
     
@@ -87,7 +113,9 @@ export default function ProfileScreen() {
           
           
           
-        ) :(
+        ) : remoteCloudinaryimage?(
+          <AdvancedImage cldImg={remoteCloudinaryimage} className="w-52 aspect-square self-center rounded-full" />
+        ):(
           <View className="w-52 aspect-square bg-gray-300 rounded-full self-center justify-center"/>
         )}
         <Text  onPress={pickImage} className="text-blue-400 self-center font-semibold">change photo</Text>
