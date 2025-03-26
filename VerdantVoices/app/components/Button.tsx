@@ -1,17 +1,29 @@
-import { View, Text, Pressable } from "react-native";
+import React from 'react';
+import { View, Pressable, Text } from 'react-native';
 
-type ButtonProps = {
-    title: string, 
-    onPress?: () => void
+interface ButtonProps {
+    title: string;
+    onPress: () => void;
+    disabled?: boolean;
+    children?: React.ReactNode;
 }
 
-export default function Button({title, onPress}: ButtonProps) {
+export default function Button({title, onPress, disabled = false, children}: ButtonProps) {
     return (
-            <View className="mt-auto w-full">
-            <Pressable onPress={onPress} className="bg-blue-400 w-full items-center py-3 rounded-lg">
-                <Text className="text-white font-semibold">{title}</Text>
+        <View className="mt-auto w-full">
+            <Pressable 
+                onPress={onPress} 
+                disabled={disabled}
+                className={`w-full items-center py-3 rounded-lg ${disabled ? 'bg-gray-400' : 'bg-blue-400'}`}
+            >
+                {children ? (
+                    children
+                ) : (
+                    <Text className={`font-semibold ${disabled ? 'text-gray-200' : 'text-white'}`}>
+                        {title}
+                    </Text>
+                )}
             </Pressable>
-            </View>
-    )
-    
+        </View>
+    );
 }

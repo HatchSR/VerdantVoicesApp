@@ -35,11 +35,18 @@ export default function PostlistItem({post}) {
       {/* <Image source={{uri: post.image_url}} className="'w-full aspect-square" /> */}
       <View className="flex-row gap-3 p-3">
         {/*footer*/}
-        <AntDesign name="hearto" size={24}/>
-        <Ionicons name="chatbubble-outline" size={24}/>
-        <Feather name="send" size={24}/>
-        <Feather name="bookmark" size={24} className="ml-auto"/>
+
+
         </View>
+                {/* Caption */}
+                {post.caption && (
+          <View className="px-3 pb-3">
+            <Text>
+              <Text className="font-bold">{post.user.username || 'New user'}</Text>
+              {' '}{post.caption}
+            </Text>
+          </View>
+        )}
     </View>
 
   );
