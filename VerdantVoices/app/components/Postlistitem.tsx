@@ -43,7 +43,8 @@ export default function PostlistItem({post}) {
           <View className="px-3 pb-3">
             <Text>
               <Text className="font-bold">{post.user.username || 'New user'}</Text>
-              {' '}{post.caption}
+              {' '}{post.caption}{'\n'}
+              {'Coordinates: '}{post.lat && post.long ? ` (${post.lat}, ${post.long})` : ''}
             </Text>
           </View>
         )}
