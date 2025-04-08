@@ -1,7 +1,7 @@
 import { Text, View, Image, FlatList, RefreshControl } from "react-native";
 import { useEffect, useState } from "react";
 import { supabase } from "~/lib/supabase";
-import PostListItem from "~/app/components/Postlistitem";
+import Floralistitem from "../components/FloralistItem";
 
 export default function Feedscreen() {
     const [posts, setPosts] = useState(null);
@@ -14,8 +14,8 @@ export default function Feedscreen() {
     const fetchPosts = async () => {
         try {
             const { data, error } = await supabase
-                .from('posts')
-                .select('*, user:profiles(*)')
+                .from('flora')
+                .select('*')
                 .order('id', { ascending: false });
 
             if (error) throw error;
@@ -37,7 +37,7 @@ export default function Feedscreen() {
         <FlatList
             data={posts || []} 
             contentContainerStyle={{ gap: 10 }}
-            renderItem={({ item }) => <PostListItem post={item} />}
+            renderItem={({ item }) => <Floralistitem post={item} />}
             showsVerticalScrollIndicator={false}
             refreshControl={
                 <RefreshControl
@@ -47,7 +47,6 @@ export default function Feedscreen() {
                     tintColor={'#ff00ff'}
                 />
             }
-            className= 'p-3'
         />
     );
 }
