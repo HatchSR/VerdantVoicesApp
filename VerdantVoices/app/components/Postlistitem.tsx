@@ -27,7 +27,7 @@ export default function PostlistItem({post}) {
             
             {/* User info overlay at bottom of image */}
             <View className="absolute bottom-0 left-0 right-0 ">
-              <View style={{ backgroundColor: 'rgba(114, 106, 54,0.5)' }} className=" p-3">
+              <View style={{ backgroundColor: 'rgba(114, 106, 54,0.75)' }} className=" p-3">
                     <View className="flex-row items-center gap-2">
                       <AdvancedImage cldImg={avatar} className="w-8 h-8 rounded-full" />
 
@@ -44,7 +44,7 @@ export default function PostlistItem({post}) {
                       <Text className="text-white font-medium">
                           {post.caption && post.caption.includes('Plant found at') ? post.caption : 
                           post.lat && post.long ? `Plant found at (${post.lat}, ${post.long})` : 
-                          'Plant found at Fish Creek Park'}
+                          'No Location Given'}
                       </Text>
 
                     </View>

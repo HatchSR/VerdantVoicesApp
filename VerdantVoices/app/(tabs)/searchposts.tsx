@@ -103,12 +103,13 @@ export default function Feedscreen() {
     };
 
     return (
-        <View className="flex-1">
-            <View className="flex-col items-center space-x-4 mt-2 px-4">
-                <Button 
+        <View className="flex-1 gap-2">
+            <View className="flex-col items-center gap-2 space-x-4 mt-2 px-4">
+                <Button
                     title="Use Current Location" 
                     onPress={useCurrentLocation}
                 />
+                
                 <Button 
                     title="Select Location" 
                     onPress={async () => {

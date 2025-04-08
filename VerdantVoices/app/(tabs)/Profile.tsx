@@ -40,7 +40,7 @@ export default function ProfileScreen() {
         if (error) {
           console.log(error);
         }
-        console.log(data);
+        ;
   
         
         setUsername(data.username);
@@ -59,7 +59,7 @@ export default function ProfileScreen() {
         }
         if (image){
           const response = await uploadImage(image);
-          console.log(response?.public_id);
+          // console.log(response?.public_id);
           updatedProfile.avatar_url = response.public_id
         }
         const { data, error } =
@@ -118,7 +118,14 @@ export default function ProfileScreen() {
         ):(
           <View className="w-52 aspect-square bg-gray-300 rounded-full self-center justify-center"/>
         )}
-        <Text  onPress={pickImage} className="text-blue-400 self-center font-semibold">change photo</Text>
+        <View className="my-2">
+        <Text  
+          onPress={pickImage}
+          style={{  backgroundColor: "#8F885D" }} 
+          className=" self-center font-semibold text-white p-2 rounded-lg">
+            change photo
+        </Text>
+        </View>
       
 
       {/*user info form*/}

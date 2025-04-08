@@ -136,16 +136,18 @@ export default function CreatePost() {
                 <View className="w-52 aspect-[3/4] bg-gray-300 rounded-lg items-center justify-center"/>
             )}
   
-            <View className="flex-wrap space-x-4 mt-2">
+            <View className="flex-row space-x-4 gap-2 mb-6 mt-2">
                 <TouchableOpacity 
                     onPress={choosePhotoFromLibrary} 
-                    className="bg-blue-400 px-4 py-2 rounded-lg"
+                    style={{ backgroundColor: '#8F885D' }}
+                    className="px-4 py-2 rounded-lg"
                 >
                     <Text className="text-white">Choose Photo</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    onPress={takePhotoWithCamera} 
-                    className="bg-blue-400 px-4 py-2 rounded-lg"
+                    onPress={takePhotoWithCamera}
+                    style={{ backgroundColor: '#8F885D' }} 
+                    className=" px-4 py-2 rounded-lg"
                 >
                     <Text className="text-white">Take Photo</Text>
                 </TouchableOpacity>
@@ -155,10 +157,10 @@ export default function CreatePost() {
                 value={caption}
                 onChangeText={(newCaption) => setCaption(newCaption)}
                 placeholder="Write a caption..."
-                className="text-lg font-semibold w-full p-3"
+                className="text-lg font-semibold w-full p-3 bg-gray-200"
                 multiline
             />
-            <View className="flex-wrap space-x-4 mt-2">
+            <View className="flex-col space-x-4 gap-2 mb-6 mt-2">
                 <Button 
                     title="Use Current Location" 
                     onPress={useCurrentLocation}

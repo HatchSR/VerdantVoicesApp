@@ -102,7 +102,7 @@ export const LocationSelectionModal = ({
                         title="Selected Location"
                     />
                 </MapView>
-                <View className="p-4 bg-white">
+                <View className="p-4 bg-white gap-2">
                     <Button 
                         title="Confirm Location" 
                         onPress={() => {

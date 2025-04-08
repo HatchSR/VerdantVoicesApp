@@ -14,7 +14,13 @@ export default function Button({title, onPress, disabled = false, children}: But
             <Pressable 
                 onPress={onPress} 
                 disabled={disabled}
-                className={`w-full items-center py-3 rounded-lg ${disabled ? 'bg-gray-400' : 'bg-blue-400'}`}
+                style={[
+                    { 
+                      opacity: disabled ? 0.5 : 1, 
+                      backgroundColor: disabled ? '#A0A0A0' : '#8F885D' // your custom grays/blues here
+                    }
+                  ]}
+                className={`w-full items-center p-3 rounded-lg`}
             >
                 {children ? (
                     children

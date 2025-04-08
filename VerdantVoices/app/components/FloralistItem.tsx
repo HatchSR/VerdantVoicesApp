@@ -20,27 +20,33 @@ export default function FloralistItem({post}) {
     
   return (
     
-    <View className="bg-white">
+    <View className="p-3 rounded-xl bg-slate-300">
 
-        {/*content */}
-        <AdvancedImage cldImg={image} className="'w-full aspect-square"  />
-      {/* <Image source={{uri: post.image_url}} className="'w-full aspect-square" /> */}
-      <View className="flex-row gap-3 p-3">
-        {/*footer*/}
-
-
-        </View>
-                {/* Caption */}
-                {post.SciName && (
+        {/*image */}
+        <AdvancedImage cldImg={image} className="'w-full aspect-square rounded-lg"  />
+        
+        
+        {/*Information */}        
           <View className="px-3 pb-3">
-            <Text>
-              {' '}{post.SciName}{'\n'}
-              {' '}{post.IndigName}{'\n'}
-              {' '}{post.ComName}{'\n'}
-              {' '}{post.Descript}{'\n'}
-            </Text>
+            
+              <Text className="font-bold text-3xl">
+                {post.IndigName}
+              </Text>
+
+              <Text className="font-semibold text-2xl px-2">
+                {post.ComName}
+              </Text>
+
+              <Text className="px-2 text-2xl italic"style={{color: '#8F885D'}}>
+                {post.SciName}
+              </Text> 
+
+              <Text className="px-4 text-xl">
+                {post.Descript}
+              </Text>
+
           </View>
-        )}
+        
     </View>
 
   );
