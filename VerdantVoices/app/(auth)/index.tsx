@@ -32,6 +32,11 @@ export default function Auth() {
     setLoading(false)
   }
 
+  // async function resetPassword() {
+  //   const { error } = await supabase.auth.resetPasswordForEmail('valid.email@supabase.io')
+  //   if (error) Alert.alert(error.message)
+  // }
+
   async function signUpWithEmail() {
     setLoading(true)
     const {
@@ -74,6 +79,9 @@ export default function Auth() {
       <View style={styles.verticallySpaced}>
         <Button title="Sign up" disabled={loading} onPress={() => signUpWithEmail()} />
       </View>
+      {/* <View style={styles.verticallySpaced}>
+        <Button title="Forgot Password?" disabled={loading} onPress={() => resetPassword()} />
+      </View> */}
     </View>
   )
 }

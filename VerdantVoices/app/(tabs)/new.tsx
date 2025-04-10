@@ -8,6 +8,7 @@ import { supabase } from "../../lib/supabase";
 import { useAuth } from "../providers/AuthProviders";
 import { router } from "expo-router";
 import * as Location from 'expo-location';
+import { Dropdown } from 'react-native-element-dropdown';
 
 export default function CreatePost() {
     const {session} = useAuth();
@@ -18,12 +19,44 @@ export default function CreatePost() {
 
     const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
     const [mapVisible, setMapVisible] = useState(false);
+    const [posts, setPosts] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
+
+    
+
+    
+        const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+        const [selectedItem, setSelectedItem] = useState(null);
+
+
+
+    const fetchDropdownData = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('flora')
+                .select('ComName')
+                .order('id', { ascending: false });
+
+            if (error) throw error;
+            // console.log(data);
+
+            setPosts(data);
+        } catch (err) {
+            console.error("Error fetching posts:", err);
+        }
+    };
 
     useEffect(() => {
         if (!image) {
             requestPermissions();
         }
-    }, [image]);
+    }, [image,caption,location]);
+
+    useEffect(() => {
+        fetchDropdownData();
+    }, []);
+
+ 
    
     const requestPermissions = async () => {
         try {
@@ -85,6 +118,7 @@ export default function CreatePost() {
     };
  
     const sharePost = async() => {
+        console.log('CAPTION',caption);
         if (!image || !location) {
             console.log('no image or location');
             return;
@@ -96,6 +130,7 @@ export default function CreatePost() {
             const response = await uploadImage(image);
             // Save image to DB
             const { data, error } = await supabase
+            
             .from('posts')
             .insert([
                 { 
@@ -125,6 +160,7 @@ export default function CreatePost() {
     };
 
     return (
+        
         <View className="p-3 items-center">
             {loading && <Text>Posting ...</Text>}
             {image ? (
@@ -153,13 +189,37 @@ export default function CreatePost() {
                 </TouchableOpacity>
             </View>
 
-            <TextInput
+
+                <Dropdown
+                    value = {caption}
+                    data={posts}
+                    search
+                    maxHeight={300}
+                    labelField="ComName"
+                    valueField="ComName"
+                    placeholder={!isDropdownOpen ? 'Select item' : '...'}
+                    searchPlaceholder="Search..."
+                    mode="default"
+                    open={isDropdownOpen}
+                    onOpen={() => setIsDropdownOpen(true)}
+                    onClose={() => setIsDropdownOpen(false)}
+                    onChange={(item) => {
+                        setCaption(item.ComName);
+                        setIsDropdownOpen(false);
+                    }}
+                    style = {{
+                        width: '100%',
+                    }}
+                />
+            
+
+            {/* <TextInput
                 value={caption}
                 onChangeText={(newCaption) => setCaption(newCaption)}
                 placeholder="Write a caption..."
                 className="text-lg font-semibold w-full p-3 bg-gray-200"
                 multiline
-            />
+            /> */}
             <View className="flex-col space-x-4 gap-2 mb-6 mt-2">
                 <Button 
                     title="Use Current Location" 

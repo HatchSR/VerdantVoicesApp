@@ -1,25 +1,26 @@
-import { Text, View, Image, FlatList, RefreshControl } from "react-native";
+import { Text, View, FlatList, RefreshControl, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import { supabase } from "~/lib/supabase";
 import PostListItem from "~/app/components/Postlistitem";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Feedscreen() {
-    const [posts, setPosts] = useState(null);
+export default function FeedScreen() {
+    const [posts, setPosts] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
-
+    const navigation = useNavigation();
+    
     useEffect(() => {
         fetchPosts();
-    }, []); 
-
+    }, []);
+    
     const fetchPosts = async () => {
         try {
             const { data, error } = await supabase
                 .from('posts')
                 .select('*, user:profiles(*)')
                 .order('id', { ascending: false });
-
+                
             if (error) throw error;
-
             setPosts(data);
         } catch (err) {
             console.error("Error fetching posts:", err);
@@ -27,17 +28,34 @@ export default function Feedscreen() {
             setRefreshing(false);
         }
     };
-
+    
     const onRefresh = () => {
         setRefreshing(true);
         fetchPosts();
     };
-
+    
+    const handlePostPress = (post) => {
+        // console.log('user_id', post.user_id);
+        // Navigate to the user profile when a post is tapped
+        navigation.navigate('Profile', { userId: post.user_id });
+    };
+    
+    const renderItem = ({ item }) => {
+        return (
+            <TouchableOpacity 
+                onPress={() => handlePostPress(item)}
+                activeOpacity={0.9}
+            >
+                <PostListItem post={item} />
+            </TouchableOpacity>
+        );
+    };
+    
     return (
         <FlatList
-            data={posts || []} 
+            data={posts}
             contentContainerStyle={{ gap: 10 }}
-            renderItem={({ item }) => <PostListItem post={item} />}
+            renderItem={renderItem}
             showsVerticalScrollIndicator={false}
             refreshControl={
                 <RefreshControl
@@ -47,7 +65,8 @@ export default function Feedscreen() {
                     tintColor={'#ff00ff'}
                 />
             }
-            className= 'p-3'
+            className="p-3"
+            keyExtractor={(item) => item.id.toString()}
         />
     );
 }

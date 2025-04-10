@@ -35,15 +35,18 @@ export default function PostlistItem({post}) {
                           <Text className="font-semibold text-white">{post.user.username || 'New user'}</Text>
                       </View>
                     </View>
+                    <Text className="text-white font-medium items-center gap-2 px-4 py-3">
+                          {post.caption ?`Plant found: ${post.caption}`: 'No caption given'}
+                      </Text>
                     
                     {/* Location */}
                     <View className="flex-row items-center gap-2 px-4 py-3">
 
-                      <Ionicons name="location-outline" size={18} color="white" />
+                      
 
+                      <Ionicons name="location-outline" size={18} color="white" />
                       <Text className="text-white font-medium">
-                          {post.caption && post.caption.includes('Plant found at') ? post.caption : 
-                          post.lat && post.long ? `Plant found at (${post.lat}, ${post.long})` : 
+                          {post.lat && post.long ? `Plant found at (${post.lat}, ${post.long})` : 
                           'No Location Given'}
                       </Text>
 
