@@ -11,43 +11,39 @@ import { cld } from "../../lib/cloudinary";
 
 
 
-export default function FloralistItem({post}) {
-    const image = cld.image(post.image);
-    //const {width} = 411
-    image
-    .resize(thumbnail().width(411).height(411)) 
+export default function FloralistItem({ post }) {
+  const image = cld.image(post.image);
+  image.resize(thumbnail().width(411).height(411));
 
-    
   return (
-    
-    <View className="p-3 rounded-xl bg-slate-300">
+    <View className="p-5 bg-white rounded-2xl shadow-md border border-[#e2e2e2]">
 
-        {/*image */}
-        <AdvancedImage cldImg={image} className="'w-full aspect-square rounded-lg"  />
-        
-        
-        {/*Information */}        
-          <View className="px-3 pb-3">
-            
-              <Text className="font-bold text-3xl">
-                {post.IndigName}
-              </Text>
+      {/*names */}
+      <View className="px-2 space-y-2">
+        <Text className="text-3xl font-extrabold text-[#8f885d]">
+          {post.IndigName}
+        </Text>
 
-              <Text className="font-semibold text-2xl px-2">
-                {post.ComName}
-              </Text>
+        <Text className="text-2xl font-semibold text-gray-800 pl-1">
+          {post.ComName}
+        </Text>
 
-              <Text className="px-2 text-2xl italic"style={{color: '#8F885D'}}>
-                {post.SciName}
-              </Text> 
+        <Text className="text-xl italic text-[#8f885d] pl-1 pb-2">
+          {post.SciName}
+        </Text>
+      </View>
+      {/* Image */}
+      <AdvancedImage
+        cldImg={image}
+        className="w-full aspect-square rounded-xl mb-4"
+      />
 
-              <Text className="px-4 text-xl">
-                {post.Descript}
-              </Text>
-
-          </View>
-        
+      {/* Info */}
+      <View className="px-2 space-y-2">
+        <Text className="text-base text-gray-700 p-2 leading-relaxed">
+          {post.Descript}
+        </Text>
+      </View>
     </View>
-
   );
 }

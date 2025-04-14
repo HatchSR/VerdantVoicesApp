@@ -30,6 +30,8 @@ export default function ProfileScreen() {
     // Get the profileUserId from route params or default to current user's ID
     const routeUserId = route.params?.userId;
     const userIdToUse = routeUserId || user?.id;
+    setRemoteImage(null);
+    setImage(null);
     
     setProfileUserId(userIdToUse);
     
